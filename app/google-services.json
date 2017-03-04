@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "392972313784",
+    "firebase_url": "https://cardigram-469f9.firebaseio.com",
+    "project_id": "cardigram-469f9",
+    "storage_bucket": "cardigram-469f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:392972313784:android:87a286d1fe972803",
+        "android_client_info": {
+          "package_name": "com.example.win_8.cardigram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "392972313784-6e86ud54822mnren1q68m59b93jfuin2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.win_8.cardigram",
+            "certificate_hash": "416fee787a7e05ca0510baa20ccaeeb2d4086f15"
+          }
+        },
+        {
+          "client_id": "392972313784-u95p253ps48kinmubc6oa278p1jhc3gr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv9i7AXibdy2enb14LEY6sguWEP8X6mD8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "392972313784-u95p253ps48kinmubc6oa278p1jhc3gr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

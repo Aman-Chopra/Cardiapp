@@ -11,6 +11,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -24,18 +25,36 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 /**
  * Provides UI for the view with Cards.
  */
 public class CardContentFragment extends Fragment {
+
+
+
     @Override
+
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         RecyclerView recyclerView = (RecyclerView) inflater.inflate(
                 R.layout.recycler_view, container, false);
         ContentAdapter adapter = new ContentAdapter(recyclerView.getContext());
         recyclerView.setAdapter(adapter);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return recyclerView;
@@ -43,7 +62,8 @@ public class CardContentFragment extends Fragment {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView picture;
-
+        private DatabaseReference mDatabase;
+        private DatabaseReference mDatabaser;
         public TextView name;
         public TextView description;
         public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -62,9 +82,32 @@ public class CardContentFragment extends Fragment {
             });
             // Adding Snackbar to Action Button inside card
             Button button = (Button)itemView.findViewById(R.id.action_button);
+            mDatabase = FirebaseDatabase.getInstance().getReference();
             button.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
+
+
+                    String name = "Aman";
+                    String email = "amanchopra64@gmail.com";
+
+                    HashMap<String,String> datamap = new HashMap<String, String>();
+                    datamap.put("Name",name);
+                    datamap.put("E-mail",email);
+                    final Context context = v.getContext();
+
+                    mDatabase.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            if(task.isSuccessful()){
+                                Toast.makeText(context,"Successful",Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                Toast.makeText(context,"Error",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
                     Snackbar.make(v, "Action is pressed",
                             Snackbar.LENGTH_LONG).show();
                 }
@@ -83,10 +126,28 @@ public class CardContentFragment extends Fragment {
                 }
             });
 
+
             ImageButton shareImageButton = (ImageButton) itemView.findViewById(R.id.share_button);
             shareImageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+
+                    final Context context = v.getContext();
+                    mDatabaser.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String name = dataSnapshot.getValue().toString();
+                            Toast.makeText(context,name,Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
                     Snackbar.make(v, "Share article",
                             Snackbar.LENGTH_LONG).show();
                 }
