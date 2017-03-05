@@ -7,15 +7,20 @@ package com.example.win_8.cardigram;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
 
 public class SplashActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(this,Login.class);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Remove the Title Bar
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Intent intent = new Intent(this, Login.class);
         startActivity(intent);
         finish();
+
+
     }
 }

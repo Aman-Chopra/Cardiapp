@@ -108,6 +108,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
+                            progressDialog.dismiss();
                             Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
                             changeActivity();
                         }
@@ -115,10 +116,9 @@ public class Login extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             progressDialog.dismiss();
-                            builder.setTitle("Error");
-                            builder.setMessage("Email-id or password is incorrect.\n\nYou might want to check your internet connection");
+                            builder.setTitle("Error.");
+                            builder.setMessage("Email-id or password is incorrect.\n\nYou might want to check your internet connection.");
                             builder.setPositiveButton("OK", null);
-                            builder.setNegativeButton("Cancel", null);
                             builder.show();
                             return;
                         }

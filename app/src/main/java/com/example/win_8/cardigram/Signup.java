@@ -1,6 +1,7 @@
 package com.example.win_8.cardigram;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -114,15 +115,24 @@ public class Signup extends AppCompatActivity {
                             Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
 
-                            changeActivity();
+                            progressDialog.dismiss();
+                            builder.setTitle("Congratulations!");
+                            builder.setMessage("Your account has been registered successfully.");
+                            builder.setPositiveButton(android.R.string.ok,
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            changeActivity();
+                                        }
+                                    }).create().show();
+                            //builder.show();
 
                         }
                         if (!task.isSuccessful()) {
                             progressDialog.dismiss();
-                            builder.setTitle("Error");
-                            builder.setMessage("Failed.\n\nCheck your Internet Connection");
+                            builder.setTitle("Error.");
+                            builder.setMessage("Failed.\n\nCheck your Internet Connection.");
                             builder.setPositiveButton("OK", null);
-                            builder.setNegativeButton("Cancel", null);
                             builder.show();
                             return;
                         }
