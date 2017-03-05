@@ -1,6 +1,10 @@
 package com.example.win_8.cardigram;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -20,6 +24,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -72,7 +81,7 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // Start the Signup activity
+                finish();
                 Intent intent = new Intent(getApplicationContext(), Signup.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
             }
@@ -82,7 +91,7 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // Start the Main activity
+                finish();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
@@ -95,13 +104,29 @@ public class Login extends AppCompatActivity {
             return;
         }
 
+
+
+
+
+        if(!isOnline())
+        {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AppCompatAlertDialogStyle);
+            builder.setTitle("Connectivity Error.");
+            builder.setMessage("Check your internet connection.");
+            builder.setPositiveButton("OK", null);
+            builder.show();
+            return;
+        }
+
         final ProgressDialog progressDialog = new ProgressDialog(Login.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        // [START sign_in_with_email]
-        final AlertDialog.Builder builder =
+
+
+        final AlertDialog.Builder builder1 =
                 new AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -116,14 +141,14 @@ public class Login extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             progressDialog.dismiss();
-                            builder.setTitle("Error.");
-                            builder.setMessage("Email-id or password is incorrect.\n\nYou might want to check your internet connection.");
-                            builder.setPositiveButton("OK", null);
-                            builder.show();
+                            builder1.setTitle("Error.");
+                            builder1.setMessage("Email-id or password is incorrect.");
+                            builder1.setPositiveButton("OK", null);
+                            builder1.show();
                             return;
                         }
 
-                        progressDialog.dismiss();
+
 
                     }
                 });
@@ -132,6 +157,7 @@ public class Login extends AppCompatActivity {
 
     private void changeActivity()
     {
+        finish();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -167,4 +193,12 @@ public class Login extends AppCompatActivity {
 
         return valid;
     }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
 }

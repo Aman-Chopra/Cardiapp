@@ -1,8 +1,11 @@
 package com.example.win_8.cardigram;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -20,6 +23,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -72,8 +80,9 @@ public class Signup extends AppCompatActivity {
         _loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Finish the registration screen and return to the Login activity
-                finish();
+
+                changeActivity();
+
             }
         });
     }
@@ -100,12 +109,32 @@ public class Signup extends AppCompatActivity {
             return;
         }
 
+
+
+
+        if(!isOnline())
+        {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AppCompatAlertDialogStyle);
+            builder.setTitle("Connectivity Error.");
+            builder.setMessage("Check your internet connection.");
+            builder.setPositiveButton("OK", null);
+            builder.show();
+            return;
+        }
+
         final ProgressDialog progressDialog = new ProgressDialog(Signup.this,
                 R.style.AppTheme_Dark_Dialog);
 
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
-        final AlertDialog.Builder builder =
+
+
+
+
+
+
+        final AlertDialog.Builder builder1 =
                 new AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle);
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -116,9 +145,9 @@ public class Signup extends AppCompatActivity {
 
 
                             progressDialog.dismiss();
-                            builder.setTitle("Congratulations!");
-                            builder.setMessage("Your account has been registered successfully.");
-                            builder.setPositiveButton(android.R.string.ok,
+                            builder1.setTitle("Congratulations!");
+                            builder1.setMessage("Your account has been registered successfully.");
+                            builder1.setPositiveButton(android.R.string.ok,
                                     new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -130,22 +159,35 @@ public class Signup extends AppCompatActivity {
                         }
                         if (!task.isSuccessful()) {
                             progressDialog.dismiss();
-                            builder.setTitle("Error.");
-                            builder.setMessage("Failed.\n\nCheck your Internet Connection.");
-                            builder.setPositiveButton("OK", null);
-                            builder.show();
+                            builder1.setTitle("Error.");
+                            builder1.setMessage("Check your internet connection.");
+                            builder1.setPositiveButton(android.R.string.ok,
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    }).create().show();
                             return;
+                            //callDialog();
+
+
                         }
-                        progressDialog.dismiss();
+
                     }
                 });
     }
 
     private void changeActivity()
     {
+        finish();
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
     }
+
+
+
+
     public boolean validate() {
         boolean valid = true;
         String name = _nameText.getText().toString();
@@ -183,6 +225,13 @@ public class Signup extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
 
