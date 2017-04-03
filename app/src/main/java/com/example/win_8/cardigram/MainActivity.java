@@ -1,5 +1,6 @@
 package com.example.win_8.cardigram;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -16,8 +17,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.TabLayout;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +44,17 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
+
         // Create Navigation drawer and inflate layout
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        View headerView = navigationView.getHeaderView(0);
+        ImageView drawerImage = (ImageView) headerView.findViewById(R.id.Image);
+        TextView drawerUsername = (TextView) headerView.findViewById(R.id.textView1);
+
+        drawerImage.setImageResource(R.drawable.start);
+        drawerUsername.setText("Aman Chopra");
+
 
 // Adding menu icon to Toolbar
         ActionBar supportActionBar = getSupportActionBar();
@@ -50,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        //TextView navhead = (TextView)findViewById(R.id.textView1);
+        //navhead.setText("Aman Chopra");
 // Set behavior of Navigation drawer
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -57,8 +72,17 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         // Set item in checked state
+                        //TextView navhead = (TextView)findViewById(R.id.textView1);
+                        //navhead.setText("Aman Chopra");
                         menuItem.setChecked(true);
+                        Toast.makeText(getApplicationContext(),menuItem.toString(),Toast.LENGTH_LONG).show();
                         // TODO: handle navigation
+                        String selected = menuItem.toString();
+                        if(selected.equals("One"))
+                        {
+                            Intent intent = new Intent(MainActivity.this, Login.class);
+                            startActivity(intent);
+                        }
                         // Closing drawer on item click
                         mDrawerLayout.closeDrawers();
                         return true;
@@ -122,10 +146,12 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        Toast.makeText(getApplicationContext(),"Successful"+id,Toast.LENGTH_LONG).show();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         } else if (id == android.R.id.home) {
+
             mDrawerLayout.openDrawer(GravityCompat.START);
         }
         return super.onOptionsItemSelected(item);

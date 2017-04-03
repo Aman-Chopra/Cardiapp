@@ -5,4 +5,21 @@
     android:background="?attr/colorPrimaryDark"
     android:orientation="vertical"
     android:padding="@dimen/md_keylines">
+    <ImageView
+        android:id="@+id/Image"
+        android:src="@drawable/start"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal" />
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="Aman"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"/>
+
 </LinearLayout>

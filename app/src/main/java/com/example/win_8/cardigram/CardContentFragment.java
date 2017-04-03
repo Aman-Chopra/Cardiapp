@@ -95,8 +95,8 @@ public class CardContentFragment extends Fragment {
                     datamap.put("Name",name);
                     datamap.put("E-mail",email);
                     final Context context = v.getContext();
-
-                    mDatabase.push().setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    mDatabase.child("users").child("yo").push().setValue(datamap)
+                   .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 

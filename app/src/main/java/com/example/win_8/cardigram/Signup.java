@@ -29,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -42,6 +44,7 @@ public class Signup extends AppCompatActivity {
     @InjectView(R.id.link_login) TextView _loginLink;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
@@ -72,6 +75,7 @@ public class Signup extends AppCompatActivity {
             public void onClick(View v) {
                 String email = _emailText.getText().toString();
                 String password = _passwordText.getText().toString();
+                String name = _nameText.getText().toString();
                 createAccount(email,password);
 
             }
@@ -142,7 +146,36 @@ public class Signup extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                            String name = _nameText.getText().toString();
+                            String email = "amanchopra64@gmail.com";
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+                            user.sendEmailVerification()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "Email sent.");
+                                            }
+                                        }
+                                    });
+                            HashMap<String,String> datamap = new HashMap<String, String>();
+                            datamap.put("Name",name);
+                            datamap.put("E-mail",email);
+                           // final Context context = v.getContext();
+                            mDatabase = FirebaseDatabase.getInstance().getReference();
+                            mDatabase.child("Users").child(user.getUid()).child("Profile").setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    if(task.isSuccessful()){
+                                        //Toast.makeText(context,"Successful",Toast.LENGTH_LONG).show();
+                                    }
+                                    else{
+                                        //Toast.makeText(context,"Error",Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
 
                             progressDialog.dismiss();
                             builder1.setTitle("Congratulations!");
@@ -160,7 +193,7 @@ public class Signup extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             progressDialog.dismiss();
                             builder1.setTitle("Error.");
-                            builder1.setMessage("Check your internet connection.");
+                            builder1.setMessage(task.getException().getMessage());
                             builder1.setPositiveButton(android.R.string.ok,
                                     new DialogInterface.OnClickListener() {
                                         @Override
@@ -216,9 +249,9 @@ public class Signup extends AppCompatActivity {
 
         TextInputLayout pass = (TextInputLayout) findViewById(R.id.passw_input_layout);
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+        if (password.isEmpty() || password.length() < 6) {
             pass.setErrorEnabled(true);
-            pass.setError("Enter a strong password.");
+            pass.setError("Password must be at least six characters.");
             valid = false;
         } else {
             pass.setErrorEnabled(false);

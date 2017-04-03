@@ -142,7 +142,7 @@ public class Login extends AppCompatActivity {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             progressDialog.dismiss();
                             builder1.setTitle("Error.");
-                            builder1.setMessage("Email-id or password is incorrect.");
+                            builder1.setMessage(task.getException().getMessage());
                             builder1.setPositiveButton("OK", null);
                             builder1.show();
                             return;
@@ -158,7 +158,7 @@ public class Login extends AppCompatActivity {
     private void changeActivity()
     {
         finish();
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, Storage.class);
         startActivity(intent);
     }
 
@@ -194,11 +194,10 @@ public class Login extends AppCompatActivity {
         return valid;
     }
 
-    public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
-    }
+    private boolean isOnline() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();}
+
 
 }
