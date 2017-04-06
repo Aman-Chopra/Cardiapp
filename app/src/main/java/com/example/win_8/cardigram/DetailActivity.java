@@ -1,5 +1,6 @@
 package com.example.win_8.cardigram;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -8,6 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 /**
  * Provides UI for the Detail page with Collapsing Toolbar.
@@ -15,6 +21,7 @@ import android.widget.TextView;
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "position";
+    public List<ImageUpload> Plist;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,17 @@ public class DetailActivity extends AppCompatActivity {
 
         TypedArray placePictures = resources.obtainTypedArray(R.array.places_picture);
         ImageView placePicutre = (ImageView) findViewById(R.id.image);
+        Intent i = getIntent();
+        Plist = (List<ImageUpload>) i.getSerializableExtra("mylist");
+        String url = Plist.get(postion).getUrl();
+        Picasso.with(this)
+                .load(url)
+                .into(placePicutre);
+        //Glide.with(this).load(Plist.get(postion).getUrl()).into(placePicutre);
+        String pos = Integer.toString(postion);
+        //String url = Plist.get(postion).getUrl();
+        Toast.makeText(getApplicationContext(),url,Toast.LENGTH_SHORT).show();
+        //Bitmap bitmap = (Bitmap) intent.getParcelableExtra("BitmapImage");
         placePicutre.setImageDrawable(placePictures.getDrawable(postion % placePictures.length()));
 
         placePictures.recycle();

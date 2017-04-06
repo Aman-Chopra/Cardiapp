@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+              xmlns:tools = "http://schemas.android.com/tools"
+              android:layout_width = "match_parent"
+              android:layout_height = "wrap_content"
+              android:orientation = "vertical"
+              android:paddingBottom = "8dp"
+              android:paddingEnd = "16dp"
+              android:paddingStart = "16dp">
+
+	<TextView
+		android:id = "@+id/name"
+		android:layout_width = "wrap_content"
+		android:layout_height = "wrap_content"
+		android:textColor = "@color/colorPrimary"
+		android:textSize = "16sp"
+		android:textStyle = "bold"
+		tools:text = "Name" />
+
+	<FrameLayout
+		android:layout_width = "wrap_content"
+		android:layout_height = "wrap_content"
+		android:layout_marginTop = "4dp"
+
+		android:paddingBottom = "4dp"
+		android:paddingEnd = "8dp"
+		android:paddingStart = "8dp"
+		android:paddingTop = "4dp">
+
+		<TextView
+			android:id = "@+id/message"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			android:textSize = "14sp"
+			tools:text = "Message" />
+
+		<ImageView
+			android:id = "@+id/image"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			tools:src = "@drawable/a" />
+		<!--android:background = "@drawable/chat"-->
+	</FrameLayout>
+</LinearLayout>

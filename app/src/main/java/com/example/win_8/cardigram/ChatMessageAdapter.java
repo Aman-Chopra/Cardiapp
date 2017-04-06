@@ -2,7 +2,6 @@ package com.example.win_8.cardigram;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
 
     @Override
     public ChatMessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ChatMessageViewHolder(activity, activity.getLayoutInflater().inflate(android.R.layout.two_line_list_item, parent, false));
+        return new ChatMessageViewHolder(activity, activity.getLayoutInflater().inflate(R.layout.chat, parent, false));
     }
 
     @Override

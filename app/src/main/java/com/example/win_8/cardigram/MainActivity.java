@@ -1,23 +1,20 @@
 package com.example.win_8.cardigram;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.support.design.widget.TabLayout;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -80,7 +77,17 @@ public class MainActivity extends AppCompatActivity {
                         String selected = menuItem.toString();
                         if(selected.equals("One"))
                         {
-                            Intent intent = new Intent(MainActivity.this, Login.class);
+                            Intent intent = new Intent(MainActivity.this, Storage.class);
+                            startActivity(intent);
+                        }
+                        else if(selected.equals("Two"))
+                        {
+                            Intent intent = new Intent(MainActivity.this, Fire.class);
+                            startActivity(intent);
+                        }
+                        else if(selected.equals("Three"))
+                        {
+                            Intent intent = new Intent(MainActivity.this, ImageListActivity.class);
                             startActivity(intent);
                         }
                         // Closing drawer on item click

@@ -14,8 +14,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -96,18 +94,18 @@ public class CardContentFragment extends Fragment {
                     datamap.put("E-mail",email);
                     final Context context = v.getContext();
                     mDatabase.child("users").child("yo").push().setValue(datamap)
-                   .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
 
-                            if(task.isSuccessful()){
-                                Toast.makeText(context,"Successful",Toast.LENGTH_LONG).show();
-                            }
-                            else{
-                                Toast.makeText(context,"Error",Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(context,"Successful",Toast.LENGTH_LONG).show();
+                                    }
+                                    else{
+                                        Toast.makeText(context,"Error",Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
                     Snackbar.make(v, "Action is pressed",
                             Snackbar.LENGTH_LONG).show();
                 }
@@ -167,7 +165,11 @@ public class CardContentFragment extends Fragment {
 
         public ContentAdapter(Context context) {
             Resources resources = context.getResources();
+            String arr[] = new String[2];
+            arr[0] = "aman";
+            arr[1] = "yo";
             mPlaces = resources.getStringArray(R.array.places);
+            //mPlaces = arr;
             mPlaceDesc = resources.getStringArray(R.array.place_desc);
             TypedArray a = resources.obtainTypedArray(R.array.places_picture);
             mPlacePictures = new Drawable[a.length()];
