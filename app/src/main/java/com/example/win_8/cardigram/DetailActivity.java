@@ -52,17 +52,22 @@ public class DetailActivity extends AppCompatActivity {
         ImageView placePicutre = (ImageView) findViewById(R.id.image);
         Intent i = getIntent();
         Plist = (List<ImageUpload>) i.getSerializableExtra("mylist");
-        String url = Plist.get(postion).getUrl();
+        String urll = Plist.get(postion).getUrl();
         Picasso.with(this)
-                .load(url)
+                .load(urll)
                 .into(placePicutre);
+
         //Glide.with(this).load(Plist.get(postion).getUrl()).into(placePicutre);
         String pos = Integer.toString(postion);
         //String url = Plist.get(postion).getUrl();
-        Toast.makeText(getApplicationContext(),url,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),urll,Toast.LENGTH_SHORT).show();
+
+
+
         //Bitmap bitmap = (Bitmap) intent.getParcelableExtra("BitmapImage");
-        placePicutre.setImageDrawable(placePictures.getDrawable(postion % placePictures.length()));
+        //placePicutre.setImageDrawable(placePictures.getDrawable(postion % placePictures.length()));
 
         placePictures.recycle();
     }
+
 }

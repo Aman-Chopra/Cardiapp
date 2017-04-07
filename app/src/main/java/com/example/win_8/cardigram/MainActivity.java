@@ -46,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         View headerView = navigationView.getHeaderView(0);
-        ImageView drawerImage = (ImageView) headerView.findViewById(R.id.Image);
+        ImageView drawerImage = (ImageView) headerView.findViewById(R.id.profile_image);
         TextView drawerUsername = (TextView) headerView.findViewById(R.id.textView1);
 
-        drawerImage.setImageResource(R.drawable.start);
+        drawerImage.setImageResource(R.drawable.b);
         drawerUsername.setText("Aman Chopra");
 
 
