@@ -34,6 +34,8 @@ public class ChatMessageViewHolder extends RecyclerView.ViewHolder {
 		name = (TextView) itemView.findViewById(R.id.name);
 		message = (TextView) itemView.findViewById(R.id.message);
 		image = (ImageView) itemView.findViewById(R.id.image);
+		TextView messageTime = (TextView) itemView.findViewById(R.id.message_time);
+		messageTime.setText("Aman");
 	}
 
 	public void bind(ChatMessage chat) {

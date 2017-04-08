@@ -18,6 +18,7 @@ public class SplashActivity extends AppCompatActivity {
         // Remove the Title Bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Intent intent = new Intent(this, Login.class);
+
         startActivity(intent);
         finish();
 

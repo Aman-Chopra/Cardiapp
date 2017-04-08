@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android = "http://schemas.android.com/apk/res/android"
-                xmlns:tools = "http://schemas.android.com/tools"
-                android:layout_width = "match_parent"
-                android:layout_height = "match_parent"
-                android:background = "#ccc"
-                tools:context = "com.example.win_8.cardigram.Fire">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:background="#ccc"
+                tools:context="com.example.win_8.cardigram.Fire">
 
 	<RelativeLayout
 		android:id = "@+id/header"
@@ -89,6 +90,10 @@
 			android:layout_marginEnd = "8dp"
 			android:background = "#ccc" />
 
+
+
+
+
 		<EditText
 			android:id = "@+id/messageTxt"
 			android:layout_width = "wrap_content"
@@ -101,7 +106,9 @@
 			android:id = "@+id/sendBtn"
 			android:layout_width = "wrap_content"
 			android:layout_height = "wrap_content"
+			android:src="@drawable/ic_send_black_24dp"
+			android:tint="@android:color/white"
 			android:layout_gravity = "bottom"
-			android:text = "Send" />
+			 />
 	</LinearLayout>
 </RelativeLayout>

@@ -39,6 +39,10 @@
 		<activity android:name=".ImageListActivity"/>
 		<activity android:name=".SettingsActivity">
 		</activity>
+		<activity android:name=".Group">
+		</activity>
+		<activity android:name=".trial">
+		</activity>
 	</application>
 
 </manifest>

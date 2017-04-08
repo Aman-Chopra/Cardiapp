@@ -76,6 +76,7 @@ public class Fire extends AppCompatActivity {
 		sendBtn = (Button) findViewById(R.id.sendBtn);
 		messageTxt = (EditText) findViewById(R.id.messageTxt);
 		messagesList = (RecyclerView) findViewById(R.id.messagesList);
+
 		//imageBtn = (ImageButton) findViewById(R.id.imageBtn);
 		//loginBtn = findViewById(R.id.loginBtn);
 		//logoutBtn = findViewById(R.id.logoutBtn);
