@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,13 +78,13 @@ public class ImageListAdapter extends ArrayAdapter<ImageUpload> {
 
 
 				File direct = new File(Environment.getExternalStorageDirectory()
-						+ "/dhaval_files");
+						+ "/Cardigram");
 
 				if (!direct.exists()) {
 					direct.mkdirs();
 				}
 
-				DownloadManager mgr = (DownloadManager) this.getSystemService(Context.DOWNLOAD_SERVICE);
+				DownloadManager mgr = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
 
 				Uri downloadUri = Uri.parse(url);
 				DownloadManager.Request request = new DownloadManager.Request(
@@ -94,9 +95,15 @@ public class ImageListAdapter extends ArrayAdapter<ImageUpload> {
 								| DownloadManager.Request.NETWORK_MOBILE)
 						.setAllowedOverRoaming(false).setTitle("Demo")
 						.setDescription("Something useful. No, really.")
-						.setDestinationInExternalPublicDir("/dhaval_files", "test.jpg");
+						.setDestinationInExternalPublicDir("/Cardigram", "test.jpg");
 
 				mgr.enqueue(request);
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(getContext(),R.style.AppCompatAlertDialogStyle);
+				builder.setTitle("Successful");
+				builder.setMessage("Image saved successfully!");
+				builder.setPositiveButton("OK", null);
+				builder.show();
 
 
 

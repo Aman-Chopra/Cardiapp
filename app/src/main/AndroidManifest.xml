@@ -35,13 +35,12 @@
 		<activity android:name=".Signup"/>
 		<activity android:name=".Storage"/>
 		<activity android:name=".Fire"/>
-		<activity android:name=".please"/>
 		<activity android:name=".ImageListActivity"/>
 		<activity android:name=".SettingsActivity">
 		</activity>
 		<activity android:name=".Group">
 		</activity>
-		<activity android:name=".trial">
+		<activity android:name=".Charts">
 		</activity>
 	</application>
 

@@ -52,32 +52,26 @@ public class Fire extends AppCompatActivity {
 	private DatabaseReference databaseRef;
 	private StorageReference storageRef;
 
-	private String username="Tushya";
+	private String username;
 
-	/*private void setUsername(String username) {
-		Log.d(TAG, "setUsername(" + String.valueOf(username) + ")");
-		if (username == null) {
-			username = "Tushya";
-		}
-		boolean isLoggedIn = !username.equals("Tushya");
-		this.username = username;
-		this.usernameTxt.setText(username);
-		//this.logoutBtn.setVisibility(isLoggedIn ? View.VISIBLE : View.GONE);
-		//this.loginBtn.setVisibility(isLoggedIn ? View.GONE : View.VISIBLE);
-	}*/
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_fire);
-		TextView fi = (TextView)findViewById(R.id.usernameTxt);
-		fi.setText("Tushya");
+
 
 		sendBtn = (Button) findViewById(R.id.sendBtn);
 		messageTxt = (EditText) findViewById(R.id.messageTxt);
 		messagesList = (RecyclerView) findViewById(R.id.messagesList);
 
-		//imageBtn = (ImageButton) findViewById(R.id.imageBtn);
+
+
+
+
+
+		imageBtn = (ImageButton) findViewById(R.id.imageBtn);
 		//loginBtn = findViewById(R.id.loginBtn);
 		//logoutBtn = findViewById(R.id.logoutBtn);
 		usernameTxt = (TextView) findViewById(R.id.usernameTxt);
@@ -88,14 +82,14 @@ public class Fire extends AppCompatActivity {
 		messagesList.setLayoutManager(layoutManager);
 
 		// Show an image picker when the user wants to upload an imasge
-		/*imageBtn.setOnClickListener(new View.OnClickListener() {
+		imageBtn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 				intent.setType("image/jpeg");
 				intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
 				startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER);
 			}
-		});*/
+		});
 		// Show a popup when the user asks to sign in
 		/*loginBtn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -122,6 +116,9 @@ public class Fire extends AppCompatActivity {
 		database = FirebaseDatabase.getInstance(app);
 		auth = FirebaseAuth.getInstance(app);
 		storage = FirebaseStorage.getInstance(app);
+
+		username = auth.getCurrentUser().getEmail();
+		usernameTxt.setText(username);
 
 		// Get a reference to our chat "room" in the database
 		databaseRef = database.getReference("Chatting");

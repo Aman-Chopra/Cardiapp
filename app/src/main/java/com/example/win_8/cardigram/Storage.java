@@ -4,10 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,10 +29,13 @@ import java.io.IOException;
 public class Storage extends AppCompatActivity implements View.OnClickListener /*  implementing click listener */ {
     //a constant to track the file chooser intent
     private static final int PICK_IMAGE_REQUEST = 234;
+    private static final int PICK_IMAGE = 1;
 
     //Buttons
     private Button buttonChoose;
     private Button buttonUpload;
+    private Bitmap imagebitmap;
+    private Bitmap scaled;
 
     //ImageView
     private ImageView imageView;
@@ -64,28 +67,35 @@ public class Storage extends AppCompatActivity implements View.OnClickListener /
 
     //method to show file chooser
     private void showFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("*/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        //Intent intent = new Intent();
+        //intent.setType("*/*");
+        //intent.setAction(Intent.ACTION_GET_CONTENT);
+        //startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);*/
+
+
+
+                Intent gallIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        gallIntent.setType("image/*");
+        startActivityForResult(Intent.createChooser(gallIntent, "Select Profile Picture"), PICK_IMAGE);
     }
 
     //handling the image chooser activity result
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data != null) {
+        //Log.i(TAG,"Status: " + requestCode + " " + resultCode);
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
-            if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data.getData() != null) {
-                filePath = data.getData();
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                    imageView.setImageBitmap(bitmap);
+            try {
+                imagebitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
 
-                } catch (IOException e) {
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
+                int scaleSize = (int) ( imagebitmap.getHeight() * (512.0 / imagebitmap.getWidth()) );
+                scaled = Bitmap.createScaledBitmap(imagebitmap, 512, scaleSize, true);
+
+                imageView = (ImageView) findViewById(R.id.imageView);
+                imageView.setImageBitmap(scaled);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -124,7 +134,7 @@ public class Storage extends AppCompatActivity implements View.OnClickListener /
                             progressDialog.dismiss();
 
                             //and displaying error message
-                            Toast.makeText(getApplicationContext(), exception.getMessage() + "ypoooooo" + filePath, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), exception.getMessage() + "Exception" + filePath, Toast.LENGTH_LONG).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {

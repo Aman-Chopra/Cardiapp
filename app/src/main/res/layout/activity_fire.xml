@@ -74,7 +74,7 @@
 		android:elevation = "4dp"
 		android:orientation = "horizontal">
 
-		<!--
+
 		<ImageButton
 			android:id = "@+id/imageBtn"
 			android:layout_width = "wrap_content"
@@ -82,7 +82,7 @@
 			android:layout_gravity = "center"
 			android:layout_marginEnd = "8dp"
 			android:layout_marginStart = "8dp"
-			android:background = "@android:drawable/ic_menu_gallery" />-->
+			android:background = "@android:drawable/ic_menu_gallery" />
 
 		<View
 			android:layout_width = "1dp"
@@ -109,6 +109,7 @@
 			android:src="@drawable/ic_send_black_24dp"
 			android:tint="@android:color/white"
 			android:layout_gravity = "bottom"
+		    android:text="Send"
 			 />
 	</LinearLayout>
 </RelativeLayout>
