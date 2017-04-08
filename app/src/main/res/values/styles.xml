@@ -1,4 +1,4 @@
-<resources xmlns:android="http://schemas.android.com/tools">
+<resources xmlns:android="http://schemas.android.com/tools" xmlns:tools="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Base application theme. -->
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -9,13 +9,18 @@
         <item name="colorAccent">#00B0FF</item>
         <!-- Blue -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="AppTheme" parent="AppTheme.Base"></style>
+    <style name="AppTheme" parent="AppTheme.Base">
+        <!--<item name="preferenceTheme">@style/PreferenceThemeOverlay</item>-->
+
+    </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/background_splash</item>
+
     </style>
 
     <style name="CustomProgressBar" parent="android:Widget.ProgressBar.Horizontal">
@@ -24,6 +29,20 @@
         <item name="android:minHeight">10dip</item>
         <item name="android:maxHeight">20dip</item>
     </style>
+
+    <style name="PreferenceThemeOverlay">
+        <item name="preferenceScreenStyle">@style/Preference.PreferenceScreen</item>
+        <item name="preferenceFragmentStyle">@style/PreferenceFragment</item>
+        <item name="preferenceCategoryStyle">@style/Preference.Category</item>
+        <item name="preferenceStyle">@style/Preference</item>
+        <item name="preferenceInformationStyle">@style/Preference.Information</item>
+        <item name="checkBoxPreferenceStyle">@style/Preference.CheckBoxPreference</item>
+        <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat</item>
+        <item name="dialogPreferenceStyle">@style/Preference.DialogPreference</item>
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+        <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
+    </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -38,6 +57,34 @@
         <item name="android:textColorPrimary">#000000</item>
         <item name="android:background">#ffffff</item>
     </style>
+
+
+    <style name="AppTheme.Dark" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="colorAccent">@color/accent_color</item>
+        <item name="android:colorAccent" tools:ignore="NewApi">@color/accent_color</item>
+        <item name="android:listSeparatorTextViewStyle">@style/MPL_PreferenceListHeader</item>
+        <item name="colorPrimary">#197319</item>
+        <item name="colorPrimaryDark">#003200</item>
+    </style>
+
+    <style name="AppTheme.Light" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorAccent">@color/accent_color</item>
+        <item name="android:colorAccent" tools:ignore="NewApi">@color/accent_color</item>
+        <item name="android:listSeparatorTextViewStyle">@style/MPL_PreferenceListHeader</item>
+        <item name="colorPrimary">#197319</item>
+        <item name="colorPrimaryDark">#003200</item>
+        <item name="actionBarTheme">@style/AppTheme.ActionBarTheme.Light</item>
+    </style>
+
+    <style name="AppTheme.ActionBarTheme.Light" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
+
+
+
 
 
 

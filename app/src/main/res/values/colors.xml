@@ -15,4 +15,6 @@
     <color name="ready_gray">#e6e6e3</color>
     <color name="ready_dark_gray">#4e4d49</color>
     <color name="ready_blue_translucent">#f21db3eb</color>
+
+    <color name="accent_color">#FF22A4D4</color>
 </resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+	<item
+		android:icon="@drawable/ic_action_name"
+		android:title="@string/item_title"
+		app:showAsAction="ifRoom">
+		<menu>
+			<group
+				android:checkableBehavior="none"
+				android:menuCategory="container" >
+				<item
+					android:id="@+id/menuItem_current_repository_website"
+					android:title="@string/item_title">
+				</item>
+				<item
+					android:id="@+id/menuItem_all_my_repositories"
+					android:title="@string/item_title">
+				</item>
+				<item
+					android:id="@+id/menuItem_all_my_apps"
+					android:title="@string/item_title">
+				</item>
+			</group>
+		</menu>
+	</item>
+
+</menu>
