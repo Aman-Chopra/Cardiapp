@@ -239,6 +239,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 
 public class Storage extends AppCompatActivity implements View.OnClickListener /*  implementing click listener */ {
     //a constant to track the file chooser intent
@@ -258,6 +259,9 @@ public class Storage extends AppCompatActivity implements View.OnClickListener /
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String uid = user.getUid();
 
+    private Bitmap imagebitmap;
+    private Bitmap scaled;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -274,6 +278,8 @@ public class Storage extends AppCompatActivity implements View.OnClickListener /
         buttonUpload.setOnClickListener(this);
         storageReference = FirebaseStorage.getInstance().getReference();
         mDataBaseRef = FirebaseDatabase.getInstance().getReference("image");
+
+
     }
 
     //method to show file chooser
@@ -438,20 +444,29 @@ public class Storage extends AppCompatActivity implements View.OnClickListener /
                     //Uri selectedImage = data.getData();
                     filePath = data.getData();
                     Toast.makeText(getApplicationContext(),""+filePath,Toast.LENGTH_SHORT).show();
-                    imageView.setImageURI(filePath);
+                    //imageView.setImageURI(filePath);
 
 
 
                     //System.out.println(mImageCaptureUri);
 
 
-                    //imagebitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-//
-//                int scaleSize = (int) ( imagebitmap.getHeight() * (512.0 / imagebitmap.getWidth()) );
-//                scaled = Bitmap.createScaledBitmap(imagebitmap, 512, scaleSize, true);
-//
-//                imageView = (ImageView) findViewById(R.id.imageView);
-//                imageView.setImageBitmap(scaled);
+
+                    try {
+                imagebitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+
+                int scaleSize = (int) ( imagebitmap.getHeight() * (512.0 / imagebitmap.getWidth()) );
+                scaled = Bitmap.createScaledBitmap(imagebitmap, 512, scaleSize, true);
+
+                imageView = (ImageView) findViewById(R.id.imageView);
+                imageView.setImageBitmap(scaled);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+
+
 
 
 

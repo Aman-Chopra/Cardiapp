@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,10 +92,11 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this, ImageListActivity.class);
                             startActivity(intent);
                         }
-                        else if(selected.equals("Three"))
+                        else if(selected.equals("Four"))
                         {
-                            ref.unauth(); //End user session
-                            startActivity(new Intent(MainActivity.this, SplashActivity.class)); //Go back to home page
+
+                            FirebaseAuth.getInstance().signOut();//End user session.
+                            startActivity(new Intent(MainActivity.this, Login.class)); //Go back to home page
                             finish();
                         }
                         // Closing drawer on item click

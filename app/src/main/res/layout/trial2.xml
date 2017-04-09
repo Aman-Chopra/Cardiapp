@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal" android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginTop="5dp"
+	android:layout_marginBottom="2dp"
+	android:layout_marginLeft="5dp">
+
+	<com.makeramen.roundedimageview.RoundedImageView
+
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:id="@+id/userProfile"
+		android:layout_width="40dp"
+		android:layout_height="40dp"
+		android:background="@drawable/a_avator"
+		android:elevation="1dp"
+		app:riv_corner_radius="20dip"
+		app:riv_mutate_background="true" />
+
+
+	<TextView android:id="@+id/messageId"
+	          android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:layout_marginLeft="10dp"
+	          android:elevation="1dp"
+	          android:minHeight="40dp"
+	          android:paddingLeft="10dp"
+	          android:paddingRight="10dp"
+	          android:paddingTop="5dp"
+	          android:text="Hello, world! This is me, there's no where else I would rather be"
+
+	          android:paddingBottom="5dp"
+	          android:layout_marginBottom="1dp"
+	          android:gravity="center_vertical|left"
+	          android:background="@drawable/chatreceive"
+	          android:layout_marginRight="50dp"
+
+	          android:textSize="18sp" />
+
+</LinearLayout>

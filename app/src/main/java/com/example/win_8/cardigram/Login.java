@@ -31,7 +31,7 @@ public class Login extends AppCompatActivity {
     private static final int REQUEST_SIGNUP = 0;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
+    public int flag=0;
 
 
     EditText _emailText;
@@ -143,6 +143,7 @@ public class Login extends AppCompatActivity {
                 Login.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        if(flag==0)
                         Toast.makeText(getApplicationContext(),"Yo",Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -165,6 +166,7 @@ public class Login extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             progressDialog.dismiss();
                             Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                            flag=1;
                             changeActivity();
                         }
 
@@ -188,7 +190,7 @@ public class Login extends AppCompatActivity {
     private void changeActivity()
     {
         finish();
-        Intent intent = new Intent(this, EventActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

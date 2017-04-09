@@ -2,12 +2,15 @@ package com.example.win_8.cardigram;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -25,8 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -43,6 +46,9 @@ public class Fire extends AppCompatActivity {
 	private TextView usernameTxt;
 	private View loginBtn;
 	private View logoutBtn;
+	private Bitmap imagebitmap;
+	private Bitmap scaled;
+	private String encodedImage;
 
 	private FirebaseApp app;
 	private FirebaseDatabase database;
@@ -53,6 +59,9 @@ public class Fire extends AppCompatActivity {
 	private StorageReference storageRef;
 
 	private String username;
+	String mess;
+	String imagemap;
+	public int imageflag = 0;
 
 
 
@@ -86,6 +95,7 @@ public class Fire extends AppCompatActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 				intent.setType("image/jpeg");
+
 				intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
 				startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER);
 			}
@@ -113,6 +123,7 @@ public class Fire extends AppCompatActivity {
 
 		// Get the Firebase app and all primitives we'll use
 		app = FirebaseApp.getInstance();
+		Log.d("URL","Aman");
 		database = FirebaseDatabase.getInstance(app);
 		auth = FirebaseAuth.getInstance(app);
 		storage = FirebaseStorage.getInstance(app);
@@ -125,7 +136,20 @@ public class Fire extends AppCompatActivity {
 
 		sendBtn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				ChatMessage chat = new ChatMessage(username, messageTxt.getText().toString());
+
+
+				if(imageflag==0) {
+					mess = messageTxt.getText().toString();
+					imagemap = "";
+				}
+				else
+				{
+					mess = "";
+					imagemap = encodedImage;
+					imageflag = 0;
+					encodedImage="";
+				}
+				ChatMessage chat = new ChatMessage(username, mess,imagemap);
 				// Push the chat message to the database
 				databaseRef.push().setValue(chat);
 				messageTxt.setText("");
@@ -175,13 +199,79 @@ public class Fire extends AppCompatActivity {
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 42 && resultCode == RESULT_OK) {
-			ChatMessageViewHolder.saveImage();
-		} else if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK) {
+		super.onActivityResult(requestCode, resultCode, data);
+		//if (requestCode == 42 && resultCode == RESULT_OK) {
+		//	ChatMessageViewHolder.saveImage();
+		if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK && data!=null && data.getData() != null) {
 			Uri selectedImageUri = data.getData();
+			imageflag = 1;
+			Log.d("URL",selectedImageUri.toString());
+
+
+			try {
+              imagebitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+
+                int scaleSize = (int) ( imagebitmap.getHeight() * (512.0 / imagebitmap.getWidth()) );
+                scaled = Bitmap.createScaledBitmap(imagebitmap, 512, scaleSize, true);
+
+                //imageView = (ImageView) findViewById(imageView);
+                //imageView.setImageBitmap(scaled);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+       scaled.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteFormat = stream.toByteArray();
+        encodedImage = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
+
+
+
+
+
+
+			/*String[] filePath = { MediaStore.Images.Media.DATA };
+			Cursor cursor = getContentResolver().query(selectedImageUri, filePath, null, null, null);
+			cursor.moveToFirst();
+			String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+			Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);*/
+
+
+
+
+			/*ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+			byte[] byteFormat = stream.toByteArray();
+			String encodedImage = Base64.encodeToString(byteFormat, Base64.NO_WRAP);*/
+			//String encodedImage = "aman";
+
+			messageTxt.setText("Image selected!");
+
+			final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Fire.this);
+			final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
+			final Set<String> set = sharedPreferences.getStringSet("imageUrls", new HashSet<String>());
+			set.add(encodedImage);
+			editor.putStringSet("imageUrls", set).apply();
+
+			Log.e(TAG, (String) set.toArray()[0]);
+
+
+
+			//cursor.close();
+
+
+
+
+
+
 
 			// Get a reference to the location where we'll store our photos
-			storageRef = storage.getReference("chat_photos");
+			/*storageRef = storage.getReference("chat_photos");
 			// Get a reference to store file at chat_photos/<FILENAME>
 			final StorageReference photoRef = storageRef.child(selectedImageUri.getLastPathSegment());
 
@@ -204,7 +294,7 @@ public class Fire extends AppCompatActivity {
 
 							Log.e(TAG, (String) set.toArray()[0]);
 						}
-					});
+					});*/
 		}
 	}
 }

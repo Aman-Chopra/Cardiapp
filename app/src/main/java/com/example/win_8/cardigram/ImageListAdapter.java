@@ -129,7 +129,7 @@ public class ImageListAdapter extends ArrayAdapter<ImageUpload> {
 			@Override
 			public void onClick(View v) {
 				Context context = v.getContext();
-				Intent intent = new Intent(context, DetailActivity.class);
+				Intent intent = new Intent(context, Collapse.class);
 				intent.putExtra(Collapse.EXTRA_POSITION, position);
 				intent.putExtra("mylist", (Serializable) listImage);
 				//intent.putExtra("BitmapImage", bitmap);
