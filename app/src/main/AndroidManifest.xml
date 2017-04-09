@@ -48,8 +48,14 @@
 		</activity>
 		<activity android:name=".MainMessage">
 		</activity>
-		<activity android:name=".MessageAdapter">
-		</activity>
+
+		<meta-data
+			android:name="com.google.android.geo.API_KEY"
+			android:value="AIzaSyAr2dnxrPokrWjatbaTevDtazpgYv6VFuI" />
+
+		<meta-data android:name="com.google.android.gms.version"
+		           android:value="@integer/google_play_services_version" />
+
 	</application>
 
 </manifest>

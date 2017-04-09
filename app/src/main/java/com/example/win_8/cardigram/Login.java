@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,6 +24,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static xdroid.toaster.Toaster.toast;
 
 public class Login extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -135,6 +136,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void run() {
                 progressDialog.dismiss();
+                toast("Process is taking too long");
                 //alerty();
 
             }
@@ -177,7 +179,7 @@ public class Login extends AppCompatActivity {
     private void changeActivity()
     {
         finish();
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, EventActivity.class);
         startActivity(intent);
     }
 
@@ -218,10 +220,7 @@ public class Login extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();}
 
-    public void alerty()
-    {
-        Toast.makeText(getApplicationContext(),"Yes Comeon",Toast.LENGTH_SHORT).show();
-    }
+
 
 
 }
