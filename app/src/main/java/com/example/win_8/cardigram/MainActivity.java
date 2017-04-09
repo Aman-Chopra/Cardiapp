@@ -90,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this, ImageListActivity.class);
                             startActivity(intent);
                         }
+                        else if(selected.equals("Three"))
+                        {
+                            ref.unauth(); //End user session
+                            startActivity(new Intent(MainActivity.this, SplashActivity.class)); //Go back to home page
+                            finish();
+                        }
                         // Closing drawer on item click
                         mDrawerLayout.closeDrawers();
                         return true;

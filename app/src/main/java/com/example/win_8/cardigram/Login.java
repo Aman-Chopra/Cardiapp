@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,8 +25,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static xdroid.toaster.Toaster.toast;
 
 public class Login extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -123,6 +122,8 @@ public class Login extends AppCompatActivity {
             return;
         }
 
+
+
         final ProgressDialog progressDialog = new ProgressDialog(Login.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -132,12 +133,20 @@ public class Login extends AppCompatActivity {
         Timer timer = new Timer();
 
 
+
+
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 progressDialog.dismiss();
-                toast("Process is taking too long");
-                //alerty();
+                //toast("Process is taking too long");
+                Login.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),"Yo",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
             }
         }, delayInMillis);

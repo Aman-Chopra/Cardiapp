@@ -5,11 +5,21 @@ package com.example.win_8.cardigram;
  */
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.view.Window;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class SplashActivity extends AppCompatActivity {
+
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseAuth mAuth;
+
 
 
     @Override
@@ -17,10 +27,48 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Remove the Title Bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Intent intent = new Intent(this, Login.class);
 
-        startActivity(intent);
-        finish();
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(i);
+                    //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Intent i = new Intent(SplashActivity.this, Login.class);
+                    startActivity(i);
+                    //Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+    }
+        public void onStart() {
+            super.onStart();
+            if(mAuth != null) {
+                mAuth.addAuthStateListener(mAuthListener);
+            }
+
+        }
+    public void onStop() {
+        super.onStop();
+        if (mAuth != null && mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+
+
+
 
         /*ByteArrayOutputStream stream = new ByteArrayOutputStream();
         scaled.compress(Bitmap.CompressFormat.JPEG, 100, stream);
@@ -35,4 +83,3 @@ public class SplashActivity extends AppCompatActivity {
 
 
     }
-}
