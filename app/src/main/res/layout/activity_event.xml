@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/activity_event"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="25dp"
+              tools:context="com.example.win_8.cardigram.EventActivity"
+              android:theme="@android:style/Theme.Material.Light.DarkActionBar">
+
+
+
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textSize="35sp"
+		android:textColor="#222222"
+		android:layout_marginTop="10dp"
+
+		android:text="Easy,"/>
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="just give the details"
+		android:layout_marginTop="5dp"
+		android:layout_marginBottom="40dp"
+
+		android:textSize="25sp"/>
+
+
+	<EditText
+		android:id="@+id/eventNameeditText"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textSize="20sp"
+		android:paddingTop="10dp"
+		android:paddingBottom="10dp"
+
+		android:background="@android:color/transparent"
+		android:hint="Event Name"
+		android:inputType="textCapWords" />
+
+	<EditText
+		android:id="@+id/descriptioneditText"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textSize="20sp"
+		android:paddingTop="10dp"
+		android:paddingBottom="10dp"
+		android:background="@android:color/transparent"
+
+		android:hint="Description"
+		android:inputType="textCapSentences" />
+
+	<TextView
+		android:id="@+id/locationeditText"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@android:color/transparent"
+		android:textSize="20sp"
+		android:paddingBottom="10dp"
+		android:paddingTop="10dp"
+		android:text="Add Location"
+		/>
+
+	<TextView
+		android:id="@+id/date"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingTop="30dp"
+		android:paddingBottom="10dp"
+		android:textColor="#222222"
+		android:text="April 12"
+		android:textSize="30sp"
+
+		android:clickable="true"/>
+
+	<LinearLayout
+		android:id="@+id/timeeditText"
+		android:layout_width="wrap_content"
+		android:paddingTop="10dp"
+		android:paddingBottom="10dp"
+		android:layout_height="wrap_content"
+		android:clickable="true">
+
+		<TextView
+			android:id="@+id/time"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="30sp"
+
+			android:textColor="#222222"
+			android:text="7:00"/>
+
+
+	</LinearLayout>
+
+
+
+
+
+
+	<Button
+		android:id="@+id/addbutton"
+		android:text="Create"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="3dp"
+		android:layout_marginTop="30dp"
+		android:textAllCaps="false"
+		android:textSize="25sp"
+
+		android:padding="0dp"
+		style="@style/Widget.AppCompat.Button.Borderless.Colored"
+		/>
+
+
+
+
+
+</LinearLayout>

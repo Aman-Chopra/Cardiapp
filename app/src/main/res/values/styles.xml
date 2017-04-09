@@ -78,6 +78,11 @@
         <item name="actionBarTheme">@style/AppTheme.ActionBarTheme.Light</item>
     </style>
 
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/authui_colorActivated</item>
+        <item name="android:textColor">@color/com_facebook_button_background_color_pressed</item>
+    </style>
+
     <style name="AppTheme.ActionBarTheme.Light" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>

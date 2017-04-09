@@ -42,6 +42,14 @@
 		</activity>
 		<activity android:name=".Charts">
 		</activity>
+		<activity android:name=".EventActivity">
+		</activity>
+		<activity android:name=".Collapse">
+		</activity>
+		<activity android:name=".MainMessage">
+		</activity>
+		<activity android:name=".MessageAdapter">
+		</activity>
 	</application>
 
 </manifest>

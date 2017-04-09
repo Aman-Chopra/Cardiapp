@@ -3,8 +3,11 @@ package com.example.win_8.cardigram;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.Button;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -18,15 +21,27 @@ public class Charts extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_charts);
-		BarChart chart = (BarChart) findViewById(R.id.chart);
+		final BarChart chart = (BarChart) findViewById(R.id.chart);
 
 		BarData data = new BarData(getXAxisValues(), getDataSet());
 		chart.setData(data);
 		chart.setDescription("My Chart");
+		int maxCapacity = 10;
+		LimitLine ll = new LimitLine(maxCapacity, "Max Capacity");
+		chart.getAxisLeft().addLimitLine(ll);
+
 		chart.animateXY(2000, 2000);
 
+		Button b = (Button)findViewById(R.id.save) ;
+		b.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(final View view) {
+				chart.saveToGallery("mychart.jpg", 85);
+			}
+		});
+
 		chart.invalidate();
-		chart.saveToGallery("mychart.jpg", 85);
+
 	}
 
 	private ArrayList<BarDataSet> getDataSet() {

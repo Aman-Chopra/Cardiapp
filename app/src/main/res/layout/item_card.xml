@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/card_text"
-            android:text="Action"
+            android:text="Save"
             android:textColor="?attr/colorPrimary" />
 
         <ImageButton

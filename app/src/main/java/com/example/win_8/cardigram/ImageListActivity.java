@@ -32,6 +32,7 @@ public class ImageListActivity extends AppCompatActivity {
 		imgList = new ArrayList<>();
 		lv = (ListView)findViewById(R.id.ListViewImage);
 		progressDialog = new ProgressDialog(this);
+		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.setMessage("Please wait!");
 		progressDialog.show();
 
@@ -50,7 +51,7 @@ public class ImageListActivity extends AppCompatActivity {
 
 			@Override
 			public void onCancelled(final DatabaseError databaseError) {
-					progressDialog.dismiss();
+				progressDialog.dismiss();
 
 			}
 		});

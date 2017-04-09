@@ -53,6 +53,9 @@ public class ImageListAdapter extends ArrayAdapter<ImageUpload> {
 		ImageView img = (ImageView)v.findViewById(R.id.card_image);
 		Button button = (Button)v.findViewById(R.id.action_button);
 
+
+		//Picasso.with(context).load(listImage.get(position).getUrl()).into(img);
+
 		Glide.with(context).load(listImage.get(position).getUrl()).into(img);
 		img.buildDrawingCache();
 		final Bitmap bitmap = img.getDrawingCache();
@@ -65,7 +68,6 @@ public class ImageListAdapter extends ArrayAdapter<ImageUpload> {
 				String url = listImage.get(position).getUrl();
 				trial ob = new trial();
 				ob.file_download(url);
-
 			}
 		});*/
 
@@ -128,7 +130,7 @@ public class ImageListAdapter extends ArrayAdapter<ImageUpload> {
 			public void onClick(View v) {
 				Context context = v.getContext();
 				Intent intent = new Intent(context, DetailActivity.class);
-				intent.putExtra(DetailActivity.EXTRA_POSITION, position);
+				intent.putExtra(Collapse.EXTRA_POSITION, position);
 				intent.putExtra("mylist", (Serializable) listImage);
 				//intent.putExtra("BitmapImage", bitmap);
 				//intent.putExtra(DetailActivity.Imglist,listImage);

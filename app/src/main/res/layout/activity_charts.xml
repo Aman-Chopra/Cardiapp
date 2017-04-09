@@ -11,6 +11,18 @@
 	<com.github.mikephil.charting.charts.BarChart
 		android:id="@+id/chart"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent" />
+		android:layout_height="500dp" />
+
+	<android.support.v7.widget.AppCompatButton
+		android:id="@+id/save"
+		android:onClick="save"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:padding="2dp"
+		android:text="Save"
+		android:shadowColor="#5a43ff"
+		style="@style/Widget.AppCompat.Button.Colored"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

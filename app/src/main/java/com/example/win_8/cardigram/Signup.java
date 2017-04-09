@@ -16,32 +16,28 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class Signup extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
-    @InjectView(R.id.input_name) EditText _nameText;
-    @InjectView(R.id.input_email) EditText _emailText;
-    @InjectView(R.id.input_password) EditText _passwordText;
-    @InjectView(R.id.btn_signup) Button _signupButton;
-    @InjectView(R.id.link_login) TextView _loginLink;
+    Button signupButton;
+    TextView _loginLink;
+    EditText _passwordText;
+    EditText _emailText;
+    EditText _nameText;
+
+
+
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -51,7 +47,11 @@ public class Signup extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        ButterKnife.inject(this);
+        signupButton = (Button)findViewById(R.id.btn_signup);
+        _loginLink = (TextView)findViewById(R.id.link_login);
+        _passwordText = (EditText)findViewById(R.id.input_password);
+        _emailText = (EditText)findViewById(R.id.input_email);
+        _nameText = (EditText)findViewById(R.id.input_name);
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -70,7 +70,7 @@ public class Signup extends AppCompatActivity {
         };
 
 
-        _signupButton.setOnClickListener(new View.OnClickListener() {
+        signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = _emailText.getText().toString();
@@ -162,7 +162,7 @@ public class Signup extends AppCompatActivity {
                             HashMap<String,String> datamap = new HashMap<String, String>();
                             datamap.put("Name",name);
                             datamap.put("E-mail",email);
-                           // final Context context = v.getContext();
+                            // final Context context = v.getContext();
                             mDatabase = FirebaseDatabase.getInstance().getReference();
                             mDatabase.child("Users").child(user.getUid()).child("Profile").setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
