@@ -210,7 +210,7 @@ public class Login extends AppCompatActivity {
     private void changeActivity()
     {
         finish();
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, Network.class);
         startActivity(intent);
 
 

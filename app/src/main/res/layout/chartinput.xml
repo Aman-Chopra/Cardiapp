@@ -14,11 +14,7 @@
 		android:paddingLeft="24dp"
 		android:paddingRight="24dp">
 
-		<ImageView android:src="@drawable/start"
-		           android:layout_width="wrap_content"
-		           android:layout_height="72dp"
-		           android:layout_marginBottom="12dp"
-		           android:layout_gravity="center_horizontal" />
+
 
 		<!-- Name Label -->
 		<android.support.design.widget.TextInputLayout
@@ -30,7 +26,7 @@
 			<EditText android:id="@+id/input_name"
 			          android:layout_width="match_parent"
 			          android:layout_height="wrap_content"
-			          android:inputType="textCapWords"
+			          android:inputType="numberDecimal"
 			          android:hint="1. Haemoglobin(g/dL)"
 			          android:textColorHint="#000000"
 			          android:textColor="#000000"/>
@@ -47,7 +43,7 @@
 			<EditText android:id="@+id/input_email"
 			          android:layout_width="match_parent"
 			          android:layout_height="wrap_content"
-			          android:inputType="textEmailAddress"
+			          android:inputType="numberDecimal"
 			          android:hint="2. Haemoglobin(g/dL)"
 			          android:textColorHint="#000000"
 			          android:textColor="#000000"/>
@@ -63,7 +59,7 @@
 			<EditText android:id="@+id/input_password"
 			          android:layout_width="match_parent"
 			          android:layout_height="wrap_content"
-			          android:inputType="textPassword"
+			          android:inputType="numberDecimal"
 			          android:hint="3. Haemoglobin(g/dL)"
 			          android:textColorHint="#000000"
 			          android:textColor="#000000"/>
@@ -78,7 +74,7 @@
 			<EditText android:id="@+id/input_4"
 			          android:layout_width="match_parent"
 			          android:layout_height="wrap_content"
-			          android:inputType="number"
+			          android:inputType="numberDecimal"
 			          android:hint="4. Haemoglobin(g/dL)"
 			          android:textColorHint="#000000"
 			          android:textColor="#000000"/>
@@ -93,11 +89,11 @@
 			<EditText android:id="@+id/input_5"
 			          android:layout_width="match_parent"
 			          android:layout_height="wrap_content"
-			          android:inputType="number"
+			          android:inputType="numberDecimal"
 			          android:hint="5. Haemoglobin(g/dL)"
 			          android:textColorHint="#000000"
 			          android:textColor="#000000"/>
-		</android.support.design.widget.TextInputLayout>
+		</android.support.design.widget.TextInputLayout>-->
 
 
 

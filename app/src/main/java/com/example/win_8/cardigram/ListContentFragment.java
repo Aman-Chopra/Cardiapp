@@ -123,9 +123,10 @@ public class ListContentFragment extends Fragment {
 
 
 
+
         final Typewriter typewriter = (Typewriter)view.findViewById(R.id.type);
         typewriter.setCharacterDelay(150);
-        typewriter.animateText("What can we do for you Aman?");
+        typewriter.animateText("Hi, What can we do for you?");
 
 
 

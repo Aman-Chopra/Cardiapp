@@ -14,11 +14,13 @@ import android.view.Window;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SplashActivity extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
+    private static boolean singleton = true;
 
 
 
@@ -38,8 +40,13 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(singleton) {
+                    FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+                    singleton = false;
+                }
                 if (user != null) {
                     // User is signed in
+
                     Intent i = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(i);
                     //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());

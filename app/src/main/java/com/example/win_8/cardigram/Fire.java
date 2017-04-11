@@ -33,6 +33,9 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import static android.os.Build.VERSION_CODES.N;
+import static com.example.win_8.cardigram.Network.USERNAME;
+
 public class Fire extends AppCompatActivity {
 	private static final String TAG = "Fire";
 
@@ -128,7 +131,7 @@ public class Fire extends AppCompatActivity {
 		auth = FirebaseAuth.getInstance(app);
 		storage = FirebaseStorage.getInstance(app);
 
-		username = auth.getCurrentUser().getEmail();
+		username = MainActivity.USERNAME;
 		usernameTxt.setText(username);
 
 		// Get a reference to our chat "room" in the database

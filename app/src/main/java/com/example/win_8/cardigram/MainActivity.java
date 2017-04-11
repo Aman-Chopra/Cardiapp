@@ -1,5 +1,6 @@
 package com.example.win_8.cardigram;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,9 +17,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,13 +43,34 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseApp app;
     public static String USERNAME;
-    public static String EMAIL;
     public static String IMAGE;
+    byte[] decodedString;
+    Bitmap decodedByte;
+
+    TextView drawerUsername;
+    ProgressDialog progressDialog;
+    CircleImageView pic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // Adding Toolbar to Main screen
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,106 +84,25 @@ public class MainActivity extends AppCompatActivity {
         app = FirebaseApp.getInstance();
         auth = FirebaseAuth.getInstance(app);
 
-        Toast.makeText(getApplication(),"yo"+IMAGE,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplication(),"yo"+IMAGE,Toast.LENGTH_SHORT).show();
 
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid());
-//
-////        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid()).child("Image");
-////        aDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid()).child("E-mail");
-////        bDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid()).child("Name");
-//
-//
-//
-//
-//        mDatabaseRef.addChildEventListener(new ChildEventListener() {
-//            public void onChildAdded(DataSnapshot snapshot, String s) {
-//                // Get the chat message from the snapshot and add it to the UI
-//                User profile = snapshot.getValue(User.class);
-//                USERNAME = profile.getname();
-//                IMAGE = profile.getimage();
-//
-//            }
-//
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//            }
-//
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//            }
-//
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//            }
-//
-//            public void onCancelled(DatabaseError databaseError) {
-//            }
-//        });
-//        Toast.makeText(getApplicationContext(),USERNAME+EMAIL,Toast.LENGTH_SHORT).show();
-//
 
 
-//        mDatabaseRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-////                User profile = dataSnapshot.getValue(User.class);
-////                nameofuser = profile.getname();
-////                imageofuser = profile.getimage();
-//                IMAGE = dataSnapshot.getValue(String.class);
-//                Toast.makeText(getApplication(),"yo"+IMAGE,Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                //Log.w(TAG, "Failed to read value.", error.toException());
-//            }
-//        });
-//
-//
-//
-//
-//
-//        aDatabaseRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-////                User profile = dataSnapshot.getValue(User.class);
-////                nameofuser = profile.getname();
-////                imageofuser = profile.getimage();
-//                EMAIL = dataSnapshot.getValue(String.class);
-//                Toast.makeText(getApplication(),"yo"+EMAIL,Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                //Log.w(TAG, "Failed to read value.", error.toException());
-//            }
-//        });
-//
-//
-//        bDatabaseRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-////                User profile = dataSnapshot.getValue(User.class);
-////                nameofuser = profile.getname();
-////                imageofuser = profile.getimage();
-//                USERNAME = dataSnapshot.getValue(String.class);
-//                Toast.makeText(getApplication(),"yo"+USERNAME,Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                //Log.w(TAG, "Failed to read value.", error.toException());
-//            }
-//        });
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        View headerView = navigationView.getHeaderView(0);
 
-//        byte[] decodedString = Base64.decode(IMAGE, Base64.DEFAULT);
-//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        drawerUsername = (TextView) headerView.findViewById(R.id.textView1);
+
+
+
+
 //
 //        CircleImageView pic = (de.hdodenhof.circleimageview.CircleImageView)findViewById(R.id.profile_image);
+//        byte[] decodedString = Base64.decode(encode, Base64.DEFAULT);
+//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 //        pic.setImageBitmap(decodedByte);
 
 
@@ -171,39 +112,29 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-//        mDatabaseRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                String value = dataSnapshot.getValue(String.class);
-//               // Log.d(TAG, "Value is: " + value);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                //Log.w(TAG, "Failed to read value.", error.toException());
-//            }
-//        });
-
-
-
-
-
-
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                CircleImageView pic = (de.hdodenhof.circleimageview.CircleImageView)findViewById(R.id.profile_image);
+               pic = (de.hdodenhof.circleimageview.CircleImageView)findViewById(R.id.profile_image);
+                Log.d("SEE", pic + "");
                 Chalja Chalja = dataSnapshot.getValue(Chalja.class);
                 String encodedImage = Chalja.getAmankiphoto();
                 IMAGE = encodedImage;
+                Toast.makeText(getApplicationContext(),""+pic,Toast.LENGTH_SHORT).show();
+
                 USERNAME = Chalja.getAman();
-                byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                pic.setImageBitmap(decodedByte);
+                decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+                decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                if(pic==null)
+                {
+                    //pic.setImageDrawable(getResources().getDrawable(R.drawable.start));
+                }
+               else
+               pic.setImageBitmap(decodedByte);
+                drawerUsername.setText(USERNAME);
+                //drawerUsername.setText("Suvimal");
+
+
 
                 // Hide the loading screen
                 //progressDialog.hide();
@@ -233,14 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Create Navigation drawer and inflate layout
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        View headerView = navigationView.getHeaderView(0);
-        ImageView drawerImage = (ImageView) headerView.findViewById(R.id.profile_image);
-        TextView drawerUsername = (TextView) headerView.findViewById(R.id.textView1);
 
-        drawerImage.setImageResource(R.drawable.a);
-        drawerUsername.setText(USERNAME);
 
 
 // Adding menu icon to Toolbar
@@ -265,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),menuItem.toString(),Toast.LENGTH_LONG).show();
                         // TODO: handle navigation
                         String selected = menuItem.toString();
-                        if(selected.equals("One"))
+                        if(selected.equals("Home"))
                         {
                             Intent intent = new Intent(MainActivity.this, Storage.class);
                             startActivity(intent);
@@ -308,11 +232,20 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
+
+
+
+
+
+
     // Add Fragments to Tabs
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new ListContentFragment(), "Home");
-        //adapter.addFragment(new TileContentFragment(), "Tile");
+        adapter.addFragment(new ItemContentFragment(), "Charts");
         adapter.addFragment(new CardContentFragment(), "Features");
         viewPager.setAdapter(adapter);
     }
