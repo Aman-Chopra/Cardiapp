@@ -1,6 +1,8 @@
 package com.example.win_8.cardigram;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -13,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,14 +24,16 @@ import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,8 +41,9 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseRef;
     private FirebaseAuth auth;
     private FirebaseApp app;
-    public String nameofuser;
-    public String imageofuser;
+    public static String USERNAME;
+    public static String EMAIL;
+    public static String IMAGE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,30 +62,114 @@ public class MainActivity extends AppCompatActivity {
         app = FirebaseApp.getInstance();
         auth = FirebaseAuth.getInstance(app);
 
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Useraccounts").child(auth.getCurrentUser().getUid());
+        Toast.makeText(getApplication(),"yo"+IMAGE,Toast.LENGTH_SHORT).show();
 
-        mDatabaseRef.addChildEventListener(new ChildEventListener() {
-            public void onChildAdded(DataSnapshot snapshot, String s) {
-                // Get the chat message from the snapshot and add it to the UI
-                User profile = snapshot.getValue(User.class);
-                nameofuser = profile.getname();
-                imageofuser = profile.getimage();
 
-            }
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid());
+//
+////        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid()).child("Image");
+////        aDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid()).child("E-mail");
+////        bDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.getCurrentUser().getUid()).child("Name");
+//
+//
+//
+//
+//        mDatabaseRef.addChildEventListener(new ChildEventListener() {
+//            public void onChildAdded(DataSnapshot snapshot, String s) {
+//                // Get the chat message from the snapshot and add it to the UI
+//                User profile = snapshot.getValue(User.class);
+//                USERNAME = profile.getname();
+//                IMAGE = profile.getimage();
+//
+//            }
+//
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//            }
+//
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//            }
+//
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//            }
+//
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
+//        Toast.makeText(getApplicationContext(),USERNAME+EMAIL,Toast.LENGTH_SHORT).show();
+//
 
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
 
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
+//        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+////                User profile = dataSnapshot.getValue(User.class);
+////                nameofuser = profile.getname();
+////                imageofuser = profile.getimage();
+//                IMAGE = dataSnapshot.getValue(String.class);
+//                Toast.makeText(getApplication(),"yo"+IMAGE,Toast.LENGTH_SHORT).show();
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                // Failed to read value
+//                //Log.w(TAG, "Failed to read value.", error.toException());
+//            }
+//        });
+//
+//
+//
+//
+//
+//        aDatabaseRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+////                User profile = dataSnapshot.getValue(User.class);
+////                nameofuser = profile.getname();
+////                imageofuser = profile.getimage();
+//                EMAIL = dataSnapshot.getValue(String.class);
+//                Toast.makeText(getApplication(),"yo"+EMAIL,Toast.LENGTH_SHORT).show();
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                // Failed to read value
+//                //Log.w(TAG, "Failed to read value.", error.toException());
+//            }
+//        });
+//
+//
+//        bDatabaseRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+////                User profile = dataSnapshot.getValue(User.class);
+////                nameofuser = profile.getname();
+////                imageofuser = profile.getimage();
+//                USERNAME = dataSnapshot.getValue(String.class);
+//                Toast.makeText(getApplication(),"yo"+USERNAME,Toast.LENGTH_SHORT).show();
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                // Failed to read value
+//                //Log.w(TAG, "Failed to read value.", error.toException());
+//            }
+//        });
 
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
+//        byte[] decodedString = Base64.decode(IMAGE, Base64.DEFAULT);
+//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//
+//        CircleImageView pic = (de.hdodenhof.circleimageview.CircleImageView)findViewById(R.id.profile_image);
+//        pic.setImageBitmap(decodedByte);
 
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-        Toast.makeText(getApplicationContext(),nameofuser,Toast.LENGTH_LONG).show();
+
+
+
+
+
+
 
 
 //        mDatabaseRef.addValueEventListener(new ValueEventListener() {
@@ -99,6 +189,49 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 
+
+
+
+
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                CircleImageView pic = (de.hdodenhof.circleimageview.CircleImageView)findViewById(R.id.profile_image);
+                Chalja Chalja = dataSnapshot.getValue(Chalja.class);
+                String encodedImage = Chalja.getAmankiphoto();
+                IMAGE = encodedImage;
+                USERNAME = Chalja.getAman();
+                byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                pic.setImageBitmap(decodedByte);
+
+                // Hide the loading screen
+                //progressDialog.hide();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // Create Navigation drawer and inflate layout
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
@@ -107,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
         TextView drawerUsername = (TextView) headerView.findViewById(R.id.textView1);
 
         drawerImage.setImageResource(R.drawable.a);
-        drawerUsername.setText("Aman Chopra");
+        drawerUsername.setText(USERNAME);
 
 
 // Adding menu icon to Toolbar

@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,6 +31,7 @@ public class Login extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     private FirebaseAuth mAuth;
+    private DatabaseReference mdatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
     public int flag=0;
 
@@ -164,10 +166,27 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
-                            progressDialog.dismiss();
+
                             Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
                             flag=1;
-                            changeActivity();
+
+                                    progressDialog.dismiss();
+                                    changeActivity();
+
+
+//                Intent intent = new Intent(this, MainActivity.class);
+//                startActivity(intent);
+
+
+
+
+
+
+
+
+
+
+
                         }
 
                         if (!task.isSuccessful()) {
@@ -193,6 +212,10 @@ public class Login extends AppCompatActivity {
         finish();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+
+
+
+
     }
 
 

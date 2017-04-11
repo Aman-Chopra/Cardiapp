@@ -180,7 +180,8 @@ public class Signup extends AppCompatActivity {
                             String email = _emailText.getText().toString();
                             String image = encodedImage;
 
-                            User profile = new User(name, email,image);
+                            Chalja Chalja = new Chalja(name, image,email);
+                            //String a = profile.
 
 
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -194,12 +195,13 @@ public class Signup extends AppCompatActivity {
                                             }
                                         }
                                     });
-//                            HashMap<String,String> datamap = new HashMap<String, String>();
-//                            datamap.put("Name",name);
-//                            datamap.put("E-mail",email);
+//                            HashMap<String,Object> datamap = new HashMap<String, Object>();
+//                           datamap.put("Name",name);
+//                           datamap.put("E-mail",email);
+//                            datamap.put("Image",image);
                             // final Context context = v.getContext();
                             mDatabase = FirebaseDatabase.getInstance().getReference();
-                            mDatabase.child("Useraccounts").child(user.getUid()).setValue(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            mDatabase.child("Users").child(user.getUid()).setValue(Chalja).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
