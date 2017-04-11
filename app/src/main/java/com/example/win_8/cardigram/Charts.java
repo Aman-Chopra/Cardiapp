@@ -88,12 +88,12 @@ public class Charts extends ActionBarActivity {
 
 	private ArrayList<String> getXAxisValues() {
 		ArrayList<String> xAxis = new ArrayList<>();
-		xAxis.add("JAN");
-		xAxis.add("FEB");
-		xAxis.add("MAR");
-		xAxis.add("APR");
-		xAxis.add("MAY");
-		xAxis.add("JUN");
+		xAxis.add("FIRST");
+		xAxis.add("SECOND");
+		xAxis.add("THIRD");
+		xAxis.add("FOURTH");
+		xAxis.add("FIFTH");
+		xAxis.add("SIXTH");
 		return xAxis;
 	}
 }

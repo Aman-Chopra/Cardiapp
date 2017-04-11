@@ -9,7 +9,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="56dp"
+        android:paddingTop="35dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
@@ -29,7 +29,7 @@
         <ImageView android:src="@drawable/start"
             android:layout_width="wrap_content"
             android:layout_height="72dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="12dp"
             android:layout_gravity="center_horizontal" />
 
         <!-- Name Label -->
@@ -81,13 +81,46 @@
                 android:textColor="#000000"/>
         </android.support.design.widget.TextInputLayout>
 
+
+        <ImageButton
+            android:id = "@+id/imageButton"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_gravity = "left"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd = "8dp"
+            android:layout_marginStart = "2dp"
+            android:background = "@android:drawable/ic_menu_gallery" />
+
+
+        <TextView
+
+            android:id="@+id/image_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="20dp"
+            android:text="Image not selected"
+            android:layout_marginBottom="8dp">
+
+        </TextView>
+
+
+
+
+
+
+
+
+
         <!-- Signup Button -->
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_signup"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="12dp"
             android:padding="12dp"
             android:text="Create Account"/>
 

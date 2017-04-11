@@ -6,7 +6,7 @@
         <!-- Light Indigo -->
         <item name="colorPrimaryDark">#003200</item>
         <!-- Dark Indigo -->
-        <item name="colorAccent">#00B0FF</item>
+        <item name="colorAccent">#003200</item>
         <!-- Blue -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
 

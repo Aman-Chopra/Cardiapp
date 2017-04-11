@@ -4,17 +4,24 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,7 +32,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+
+import static com.example.win_8.cardigram.Fire.RC_PHOTO_PICKER;
 
 public class Signup extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
@@ -35,6 +47,12 @@ public class Signup extends AppCompatActivity {
     EditText _passwordText;
     EditText _emailText;
     EditText _nameText;
+    ImageButton imageBtn;
+    public int check = 0;
+    Bitmap imagebitmap;
+    Bitmap scaled;
+    String encodedImage;
+    TextView selected;
 
 
 
@@ -52,6 +70,8 @@ public class Signup extends AppCompatActivity {
         _passwordText = (EditText)findViewById(R.id.input_password);
         _emailText = (EditText)findViewById(R.id.input_email);
         _nameText = (EditText)findViewById(R.id.input_name);
+        imageBtn = (ImageButton) findViewById(R.id.imageButton);
+        selected = (TextView)findViewById(R.id.image_input_layout);
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -78,6 +98,16 @@ public class Signup extends AppCompatActivity {
                 String name = _nameText.getText().toString();
                 createAccount(email,password);
 
+            }
+        });
+
+        imageBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/jpeg");
+
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER);
             }
         });
 
@@ -147,7 +177,12 @@ public class Signup extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                             String name = _nameText.getText().toString();
-                            String email = "amanchopra64@gmail.com";
+                            String email = _emailText.getText().toString();
+                            String image = encodedImage;
+
+                            User profile = new User(name, email,image);
+
+
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                             user.sendEmailVerification()
@@ -159,12 +194,12 @@ public class Signup extends AppCompatActivity {
                                             }
                                         }
                                     });
-                            HashMap<String,String> datamap = new HashMap<String, String>();
-                            datamap.put("Name",name);
-                            datamap.put("E-mail",email);
+//                            HashMap<String,String> datamap = new HashMap<String, String>();
+//                            datamap.put("Name",name);
+//                            datamap.put("E-mail",email);
                             // final Context context = v.getContext();
                             mDatabase = FirebaseDatabase.getInstance().getReference();
-                            mDatabase.child("Users").child(user.getUid()).child("Profile").setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            mDatabase.child("Useraccounts").child(user.getUid()).setValue(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
@@ -229,6 +264,16 @@ public class Signup extends AppCompatActivity {
 
         TextInputLayout til = (TextInputLayout) findViewById(R.id.name_input_layout);
 
+        if(check==0)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AppCompatAlertDialogStyle);
+            builder.setTitle("Missing fields");
+            builder.setMessage("Please select an image");
+            builder.setPositiveButton("OK", null);
+            builder.show();
+            return false;
+        }
+
         if (name.isEmpty() || name.length() < 3) {
             til.setErrorEnabled(true);
             til.setError("Enter a valid name.");
@@ -266,6 +311,111 @@ public class Signup extends AppCompatActivity {
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //if (requestCode == 42 && resultCode == RESULT_OK) {
+        //	ChatMessageViewHolder.saveImage();
+        if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK && data!=null && data.getData() != null) {
+            Uri selectedImageUri = data.getData();
+            check = 1;
+            Log.d("URL",selectedImageUri.toString());
+
+
+            try {
+                imagebitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
+
+                int scaleSize = (int) ( imagebitmap.getHeight() * (512.0 / imagebitmap.getWidth()) );
+                scaled = Bitmap.createScaledBitmap(imagebitmap, 512, scaleSize, true);
+
+                //imageView = (ImageView) findViewById(imageView);
+                //imageView.setImageBitmap(scaled);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            scaled.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] byteFormat = stream.toByteArray();
+            encodedImage = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
+
+
+
+
+
+
+			/*String[] filePath = { MediaStore.Images.Media.DATA };
+			Cursor cursor = getContentResolver().query(selectedImageUri, filePath, null, null, null);
+			cursor.moveToFirst();
+			String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+			Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);*/
+
+
+
+
+			/*ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+			byte[] byteFormat = stream.toByteArray();
+			String encodedImage = Base64.encodeToString(byteFormat, Base64.NO_WRAP);*/
+            //String encodedImage = "aman";
+
+            selected.setText("Image selected!");
+
+            final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Signup.this);
+            final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
+            final Set<String> set = sharedPreferences.getStringSet("imageUrls", new HashSet<String>());
+            set.add(encodedImage);
+            editor.putStringSet("imageUrls", set).apply();
+
+            Log.e(TAG, (String) set.toArray()[0]);
+
+
+
+            //cursor.close();
+
+
+
+
+
+
+
+            // Get a reference to the location where we'll store our photos
+			/*storageRef = storage.getReference("chat_photos");
+			// Get a reference to store file at chat_photos/<FILENAME>
+			final StorageReference photoRef = storageRef.child(selectedImageUri.getLastPathSegment());
+
+			// Upload file to Firebase Storage
+			photoRef.putFile(selectedImageUri)
+					.addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+						public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+							// When the image has successfully uploaded, we get its download URL
+							Uri downloadUrl = taskSnapshot.getDownloadUrl();
+							// Set the download URL to the message box, so that the user can send it to the database
+							messageTxt.setText(downloadUrl.toString());
+
+							final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Fire.this);
+							final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
+							final Set<String> set = sharedPreferences.getStringSet("imageUrls", new HashSet<String>());
+							set.add(downloadUrl.toString());
+							editor.putStringSet("imageUrls", set).apply();
+
+							Log.e(TAG, (String) set.toArray()[0]);
+						}
+					});*/
+        }
+    }
+
+
+
+
+
 
 
 }

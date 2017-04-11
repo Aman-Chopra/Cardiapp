@@ -38,15 +38,11 @@
 		<activity android:name=".ImageListActivity"/>
 		<activity android:name=".SettingsActivity">
 		</activity>
-		<activity android:name=".Group">
-		</activity>
 		<activity android:name=".Charts">
 		</activity>
 		<activity android:name=".EventActivity">
 		</activity>
 		<activity android:name=".Collapse">
-		</activity>
-		<activity android:name=".MainMessage">
 		</activity>
 
 		<meta-data

@@ -2,8 +2,6 @@ package com.example.win_8.cardigram;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,11 +47,11 @@ public class SettingsActivity extends PreferenceActivity
 				return true;
 			}
 		});
-		handleActionBarMenu();
+		//handleActionBarMenu();
 
 	}
 
-	private void handleActionBarMenu()
+	/*private void handleActionBarMenu()
 	{
 		getToolbar().inflateMenu(R.menu.activity_set);
 		final OnMenuItemClickListener onMenuItemClickListener=new OnMenuItemClickListener()
@@ -84,7 +82,7 @@ public class SettingsActivity extends PreferenceActivity
 			}
 		};
 		setOnMenuItemClickListenerRecursive(getToolbar().getMenu(),onMenuItemClickListener);
-	}
+	}*/
 
 	private static void setOnMenuItemClickListenerRecursive(Menu menu,OnMenuItemClickListener listener)
 	{

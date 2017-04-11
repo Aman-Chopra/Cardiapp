@@ -171,6 +171,7 @@ public class Login extends AppCompatActivity {
                         }
 
                         if (!task.isSuccessful()) {
+                            flag = 1;
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             progressDialog.dismiss();
                             builder1.setTitle("Error.");

@@ -94,7 +94,7 @@
 			android:layout_width = "36dp"
 			android:layout_height = "36dp"
 			android:layout_marginLeft="0dp"
-			android:background = "@drawable/a"
+			android:background = "@drawable/start"
 			android:foregroundGravity = "center"
 			android:layout_alignParentStart="true"/>
 

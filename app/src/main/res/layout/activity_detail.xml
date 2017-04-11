@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
+
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="@dimen/article_keylines"
@@ -61,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="?attr/colorAccent"
+                android:layout_marginTop="20dp"
                 android:text="Description"
                 android:textSize="@dimen/article_titles"
                 android:layout_marginBottom="@dimen/md_keylines" />
@@ -71,7 +73,7 @@
                 android:layout_height="wrap_content"
                 tools:text="@string/detail_desc" />
 
-            <TextView
+            <!--<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="?attr/colorAccent"
@@ -84,7 +86,7 @@
                 android:id="@+id/place_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/detail_location" />
+                tools:text="@string/detail_location" />-->
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

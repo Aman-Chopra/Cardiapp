@@ -28,7 +28,7 @@ public class Collapse extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
 		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		//getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		// Set Collapsing Toolbar layout to the screen
 		CollapsingToolbarLayout collapsingToolbar =
 				(CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -47,8 +47,7 @@ public class Collapse extends AppCompatActivity {
 		placeDetail.setText("Aman");
 
 
-		TextView placeLocation =  (TextView) findViewById(R.id.place_location);
-		placeLocation.setText("Comeon");
+
 
 		TypedArray placePictures = resources.obtainTypedArray(R.array.places_picture);
 		ImageView placePicutre = (ImageView) findViewById(R.id.image);
