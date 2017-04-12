@@ -224,6 +224,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -330,12 +331,12 @@ public class Storage extends AppCompatActivity implements View.OnClickListener /
                             @SuppressWarnings("VisibleForTests")ImageUpload imageUpload = new ImageUpload(taskSnapshot.getDownloadUrl().toString());
                             String uploadId = mDataBaseRef.push().getKey();
                             mDataBaseRef.child(uploadId).setValue(imageUpload);
-
+                            Toast.makeText(getApplicationContext(),"File uploaded",Toast.LENGTH_SHORT).show();
                             //and displaying a success toast
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getApplication(),R.style.AppCompatAlertDialogStyle);
-                            builder.setTitle("File uploaded successfully!");
-                            builder.setPositiveButton("OK", null);
-                            builder.show();
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext(),R.style.AppCompatAlertDialogStyle);
+//                            builder.setTitle("File uploaded successfully!");
+//                            builder.setPositiveButton("OK", null);
+//                            builder.show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
