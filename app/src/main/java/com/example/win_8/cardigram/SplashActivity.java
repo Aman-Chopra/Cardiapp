@@ -4,10 +4,16 @@ package com.example.win_8.cardigram;
  * Created by win-8 on 27-02-2017.
  */
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
 import android.view.Window;
@@ -34,30 +40,49 @@ public class SplashActivity extends AppCompatActivity {
                 .getDefaultSharedPreferences(getBaseContext());
 
 
-        mAuth = FirebaseAuth.getInstance();
+        if(!isOnline()) {
+            getWindow().getDecorView().setBackgroundColor(Color.BLACK);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AppCompatAlertDialogStyle);
+            builder.setCancelable(false);
+            builder.setTitle("Connectivity Error!");
+            builder.setMessage("Your device is not connected to the internet.");
+            builder.setPositiveButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            System.exit(0);
+                        }
+                    }).create().show();
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(singleton) {
-                    FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-                    singleton = false;
-                }
-                if (user != null) {
-                    // User is signed in
+        }
+        else {
 
-                    Intent i = new Intent(SplashActivity.this, MainActivity.class);
-                    startActivity(i);
-                    //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Intent i = new Intent(SplashActivity.this, Login.class);
-                    startActivity(i);
-                    //Log.d(TAG, "onAuthStateChanged:signed_out");
+
+            mAuth = FirebaseAuth.getInstance();
+
+            mAuthListener = new FirebaseAuth.AuthStateListener() {
+                @Override
+                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    if (singleton) {
+                        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+                        singleton = false;
+                    }
+                    if (user != null) {
+                        // User is signed in
+
+                        Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(i);
+                        //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    } else {
+                        // User is signed out
+                        Intent i = new Intent(SplashActivity.this, Login.class);
+                        startActivity(i);
+                        //Log.d(TAG, "onAuthStateChanged:signed_out");
+                    }
                 }
-            }
-        };
+            };
+        }
     }
         public void onStart() {
             super.onStart();
@@ -72,6 +97,12 @@ public class SplashActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+
+    private boolean isOnline() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();}
+
 
 
 

@@ -7,6 +7,8 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
+
+
 	<application
 		android:allowBackup="true"
 		android:icon="@drawable/start"
@@ -52,8 +54,27 @@
 			android:name="com.google.android.gms.version"
 			android:value="@integer/google_play_services_version"/>
 
-		<activity android:name=".Network">
+		<activity android:name=".EventListActivity">
 		</activity>
+
+
+
+
+
+		<!-- [START firebase_service] -->
+
+
+
+
+
+
+
+
+
+
+
+
+
 	</application>
 
 </manifest>

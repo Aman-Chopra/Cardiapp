@@ -36,6 +36,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.example.win_8.cardigram.Fire.RC_PHOTO_PICKER;
 
@@ -53,6 +55,7 @@ public class Signup extends AppCompatActivity {
     Bitmap scaled;
     String encodedImage;
     TextView selected;
+    public int flag = 0;
 
 
 
@@ -162,6 +165,37 @@ public class Signup extends AppCompatActivity {
 
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
+        long delayInMillis = 8000;
+        Timer timer = new Timer();
+
+
+
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+                //toast("Process is taking too long");
+                Signup.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(flag==0)
+                        {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext(),R.style.AppCompatAlertDialogStyle);
+                            builder.setTitle("Connectivity Error.");
+                            builder.setMessage("Check your internet connection.");
+                            builder.setPositiveButton("OK", null);
+                            builder.show();
+                            return;
+
+                        }
+
+                    }
+                });
+
+
+            }
+        }, delayInMillis);
 
 
 
@@ -175,6 +209,7 @@ public class Signup extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
+                            flag = 1;
                             Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                             String name = _nameText.getText().toString();
                             String email = _emailText.getText().toString();
@@ -228,6 +263,7 @@ public class Signup extends AppCompatActivity {
 
                         }
                         if (!task.isSuccessful()) {
+                            flag = 1;
                             progressDialog.dismiss();
                             builder1.setTitle("Error.");
                             builder1.setMessage(task.getException().getMessage());

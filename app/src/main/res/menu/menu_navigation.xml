@@ -14,9 +14,9 @@
             android:tint="@color/button_grey"
             android:title="Storage" />
         <item
-            android:icon="@drawable/ic_person_black_24dp"
+            android:icon="@drawable/ic_event_black_24dp"
             android:tint="@color/button_grey"
-            android:title="Profile" />
+            android:title="Bookings" />
         <item
             android:icon="@drawable/ic_settings_black_24dp"
             android:tint="@color/button_grey"

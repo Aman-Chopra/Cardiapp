@@ -1,9 +1,12 @@
 package com.example.win_8.cardigram;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -21,7 +24,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
+
 
 
 
@@ -120,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 Chalja Chalja = dataSnapshot.getValue(Chalja.class);
                 String encodedImage = Chalja.getAmankiphoto();
                 IMAGE = encodedImage;
-                Toast.makeText(getApplicationContext(),""+pic,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),""+pic,Toast.LENGTH_SHORT).show();
 
                 USERNAME = Chalja.getAman();
                 decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
@@ -186,30 +191,44 @@ public class MainActivity extends AppCompatActivity {
                         //TextView navhead = (TextView)findViewById(R.id.textView1);
                         //navhead.setText("Aman Chopra");
                         menuItem.setChecked(true);
-                        Toast.makeText(getApplicationContext(),menuItem.toString(),Toast.LENGTH_LONG).show();
+
                         // TODO: handle navigation
                         String selected = menuItem.toString();
                         if(selected.equals("Home"))
                         {
+                            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                        else if(selected.equals("Appointments"))
+                        {
+                            Intent intent = new Intent(MainActivity.this, EventListActivity.class);
+                            startActivity(intent);
+                        }
+                        else if(selected.equals("Storage"))
+                        {
                             Intent intent = new Intent(MainActivity.this, Storage.class);
                             startActivity(intent);
                         }
-                        else if(selected.equals("Two"))
+
+                        else if(selected.equals("Settings"))
                         {
-                            Intent intent = new Intent(MainActivity.this, Fire.class);
+                            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                             startActivity(intent);
                         }
-                        else if(selected.equals("Three"))
-                        {
-                            Intent intent = new Intent(MainActivity.this, ImageListActivity.class);
-                            startActivity(intent);
-                        }
-                        else if(selected.equals("Four"))
+                        else if(selected.equals("Logout"))
                         {
 
                             FirebaseAuth.getInstance().signOut();//End user session.
                             startActivity(new Intent(MainActivity.this, Login.class)); //Go back to home page
                             finish();
+                            /*Intent intent = new Intent(MainActivity.this, Charts.class);
+                            startActivity(intent);*/
+                        }
+                        else if(selected.equals("Bookings"))
+                        {
+
+                            Intent intent = new Intent(MainActivity.this, EventActivity.class);
+                            startActivity(intent);
                             /*Intent intent = new Intent(MainActivity.this, Charts.class);
                             startActivity(intent);*/
                         }
@@ -295,6 +314,12 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    private boolean isOnline() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();}
+
+
 
 
 }

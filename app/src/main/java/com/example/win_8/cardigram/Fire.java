@@ -3,6 +3,7 @@ package com.example.win_8.cardigram;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
@@ -33,8 +35,6 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import static android.os.Build.VERSION_CODES.N;
-import static com.example.win_8.cardigram.Network.USERNAME;
 
 public class Fire extends AppCompatActivity {
 	private static final String TAG = "Fire";
@@ -131,6 +131,10 @@ public class Fire extends AppCompatActivity {
 		auth = FirebaseAuth.getInstance(app);
 		storage = FirebaseStorage.getInstance(app);
 
+		byte[] decodedString = Base64.decode(MainActivity.IMAGE, Base64.DEFAULT);
+		Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+		ImageView picture = (ImageView)findViewById(R.id.userIcon);
+		picture.setImageBitmap(decodedByte);
 		username = MainActivity.USERNAME;
 		usernameTxt.setText(username);
 
@@ -152,6 +156,8 @@ public class Fire extends AppCompatActivity {
 					imageflag = 0;
 					encodedImage="";
 				}
+				if(mess.equals("")&&imagemap.equals(""))
+					return;
 				ChatMessage chat = new ChatMessage(username, mess,imagemap);
 				// Push the chat message to the database
 				databaseRef.push().setValue(chat);

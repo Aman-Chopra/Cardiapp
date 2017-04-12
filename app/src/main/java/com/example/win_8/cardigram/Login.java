@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,7 +39,7 @@ public class Login extends AppCompatActivity {
     EditText _passwordText;
     Button _loginButton;
     TextView _signupLink;
-    TextView _see;
+
     public static int a = 0;
 
 
@@ -53,7 +52,7 @@ public class Login extends AppCompatActivity {
         _passwordText = (EditText)findViewById(R.id.input_password);
         _loginButton = (Button)findViewById(R.id.btn_login);
         _signupLink = (TextView)findViewById(R.id.link_signup);
-        _see = (TextView)findViewById(R.id.link_see);
+
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -92,15 +91,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        _see.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                finish();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void signIn(String email, String password) {
@@ -131,7 +122,7 @@ public class Login extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
-        long delayInMillis = 6000;
+        long delayInMillis = 8000;
         Timer timer = new Timer();
 
 
@@ -146,7 +137,16 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void run() {
                         if(flag==0)
-                        Toast.makeText(getApplicationContext(),"Yo",Toast.LENGTH_SHORT).show();
+                        {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext(),R.style.AppCompatAlertDialogStyle);
+                            builder.setTitle("Connectivity Error.");
+                            builder.setMessage("Check your internet connection.");
+                            builder.setPositiveButton("OK", null);
+                            builder.show();
+                            return;
+
+                        }
+
                     }
                 });
 
@@ -210,7 +210,7 @@ public class Login extends AppCompatActivity {
     private void changeActivity()
     {
         finish();
-        Intent intent = new Intent(this, Network.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
 
 

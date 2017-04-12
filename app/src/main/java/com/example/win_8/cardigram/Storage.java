@@ -224,7 +224,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -333,7 +332,10 @@ public class Storage extends AppCompatActivity implements View.OnClickListener /
                             mDataBaseRef.child(uploadId).setValue(imageUpload);
 
                             //and displaying a success toast
-                            Toast.makeText(getApplicationContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getApplication(),R.style.AppCompatAlertDialogStyle);
+                            builder.setTitle("File uploaded successfully!");
+                            builder.setPositiveButton("OK", null);
+                            builder.show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -344,7 +346,7 @@ public class Storage extends AppCompatActivity implements View.OnClickListener /
                             progressDialog.dismiss();
 
                             //and displaying error message
-                            Toast.makeText(getApplicationContext(), exception.getMessage() + "ypoooooo" + filePath, Toast.LENGTH_LONG).show();
+
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -360,8 +362,13 @@ public class Storage extends AppCompatActivity implements View.OnClickListener /
         }
         //if there is not any file
         else {
-            Toast.makeText(getApplicationContext(), "Upload", Toast.LENGTH_LONG).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AppCompatAlertDialogStyle);
+            builder.setTitle("Missing fields");
+            builder.setMessage("Please select an image to upload");
+            builder.setPositiveButton("OK", null);
+            builder.show();
             //you can display an error toast
+
         }
     }
 
@@ -425,14 +432,14 @@ public class Storage extends AppCompatActivity implements View.OnClickListener /
 
                     // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
                     Uri tempUri = getImageUri(getApplicationContext(), photo);
-                    Toast.makeText(getApplicationContext(),""+tempUri,Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getApplicationContext(),""+tempUri,Toast.LENGTH_SHORT).show();
 
                     filePath = tempUri;
 
                     // CALL THIS METHOD TO GET THE ACTUAL PATH
                     File finalFile = new File(getRealPathFromURI(tempUri));
-                    Toast.makeText(getApplicationContext(),"yo",Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(),""+finalFile,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"yo",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),""+finalFile,Toast.LENGTH_SHORT).show();
 
 
 
@@ -443,7 +450,7 @@ public class Storage extends AppCompatActivity implements View.OnClickListener /
                 if(resultCode == RESULT_OK){
                     //Uri selectedImage = data.getData();
                     filePath = data.getData();
-                    Toast.makeText(getApplicationContext(),""+filePath,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),""+filePath,Toast.LENGTH_SHORT).show();
                     //imageView.setImageURI(filePath);
 
 

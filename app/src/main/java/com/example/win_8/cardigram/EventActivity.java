@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -84,15 +85,31 @@ public class EventActivity extends AppCompatActivity {
 			}
 		};
 
+//		dateEditText.setOnClickListener(new View.OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				myCalendar = Calendar.getInstance();
+//				new DatePickerDialog(EventActivity.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//			}
+//		});
+
+
 		dateEditText.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				myCalendar = Calendar.getInstance();
-				new DatePickerDialog(EventActivity.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+				DatePickerDialog dp = new DatePickerDialog(EventActivity.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+				dp.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
+				dp.show();
+
 			}
 		});
+
+
 
 		timeEditText.setOnClickListener(new View.OnClickListener() {
 
@@ -168,7 +185,11 @@ public class EventActivity extends AppCompatActivity {
 							progressDialog.dismiss();
 						}
 						else{
-							Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+							AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext(),R.style.AppCompatAlertDialogStyle);
+							builder.setTitle("Done");
+							builder.setMessage("Appointment saved successfully!");
+							builder.setPositiveButton("OK", null);
+							builder.show();
 							progressDialog.dismiss();
 						}
 					}
@@ -231,7 +252,7 @@ public class EventActivity extends AppCompatActivity {
 
 
 		if(TextUtils.isEmpty(dateString)){
-			dateEditText.setError("Enter the event date.");
+			dateEditText.setError("Enter the appointment date.");
 			valid = false;
 		}
 		else{
@@ -239,7 +260,7 @@ public class EventActivity extends AppCompatActivity {
 		}
 
 		if(TextUtils.isEmpty(timeString)){
-			timeEditText.setError("Enter the event time.");
+			timeEditText.setError("Enter the appointment time.");
 			valid = false;
 		}
 		else {
@@ -247,7 +268,7 @@ public class EventActivity extends AppCompatActivity {
 		}
 
 		if(TextUtils.isEmpty(locationString)){
-			locationEditText.setError("Select the event location.");
+			locationEditText.setError("Select the appointment location.");
 			valid = false;
 		}
 		else {
